@@ -4,8 +4,7 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Sameet", "Mehta", , "sameet.mehta@yale.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3029-3217"))
-Description: Generate interactive RNA-Seq differential analysis report using Quarto.
-This allows generation of multiple outputs from a single source file.
+Description: Generate interactive RNA-Seq differential analysis report using Quarto. This allows generation of multiple outputs from a single source file.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

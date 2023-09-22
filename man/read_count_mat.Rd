@@ -7,7 +7,7 @@
 read_count_mat(fn)
 }
 \arguments{
-\item{fn}{}
+\item{fn}{path to a file name typically a csv file.}
 }
 \value{
 A matrix of counts of integers.
@@ -16,5 +16,9 @@ A matrix of counts of integers.
 Read in the counts
 }
 \examples{
-count_mat <- read_count_mat("genes_count_mat.csv")
+\dontrun{
+library(here)
+fn <- file.path("tests", "test_data", "gene_count_matrix_fixed.csv")
+count_mat <- read_count_mat(fn)
+}
 }
