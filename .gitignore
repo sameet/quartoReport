@@ -51,3 +51,7 @@ rsconnect/
 # Test data used to test the code
 tests/test_data/*
 
+# Other files
+.Rbuildignore
+
+

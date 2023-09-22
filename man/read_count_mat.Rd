@@ -4,10 +4,12 @@
 \alias{read_count_mat}
 \title{Read in the counts}
 \usage{
-read_count_mat(fn)
+read_count_mat(fn, meta_df)
 }
 \arguments{
 \item{fn}{path to a file name typically a csv file.}
+
+\item{meta_df}{A meta-data frame.}
 }
 \value{
 A matrix of counts of integers.
