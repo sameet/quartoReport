@@ -7,6 +7,10 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' contrasts_df <- get_contrasts("contrasts.txt", meta_df)
+#' contarsts_df <- get_contrasts(meta_df = meta_df)
+#' }
 get_contrasts <- function(fn = NULL, meta_df) {
   if(fs::is_file(fn)) {
     fn |>
