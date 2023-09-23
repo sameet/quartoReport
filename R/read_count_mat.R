@@ -27,7 +27,7 @@ read_count_mat <- function(fn, meta_df = NULL) {
 
   fn |>
     readr::read_delim(",", show_col_types = FALSE) |>
-    tidyr::pivot_longer(!starts_with("gene_id"),
+    tidyr::pivot_longer(!tidyselect::starts_with("gene_id"),
                         names_to = "sample", values_to = "counts") |>
     dplyr::group_by(gene_id, sample) |>
     dplyr::summarize(fixed_counts = sum(counts,

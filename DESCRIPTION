@@ -25,6 +25,7 @@ Imports:
     stringr,
     tibble,
     tidyr (>= 1.3.0),
+    tidyselect,
     utils
 Suggests: 
     testthat (>= 3.0.0)
