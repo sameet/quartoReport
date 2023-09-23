@@ -3,6 +3,7 @@
 export(check_compatibility)
 export(compose_qmd)
 export(get_contrasts)
+export(make_analysis)
 export(make_comparisons)
 export(make_deseq_object)
 export(make_qc_bit)

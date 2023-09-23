@@ -23,5 +23,7 @@ make_deseq_object <- function(count_mat, meta_df) {
                                      tidy = FALSE)
     )
   )
+
+  dds <- DESeq2::DESeq(dds) # the actual calculation happen here
   dds
 }

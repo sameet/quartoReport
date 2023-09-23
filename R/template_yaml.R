@@ -35,7 +35,6 @@ execute:
 params:
   count_mat: \"gene_count_matrix.csv\"
   sample_sheet: \"sample-sheet.txt\"
-  use_title: \"RNASeq Analysis Report\"
   contrasts: null
   metrics: null
   outputs: \"report_output_dir\"
