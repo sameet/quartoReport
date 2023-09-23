@@ -4,7 +4,7 @@
 \alias{read_count_mat}
 \title{Read in the counts}
 \usage{
-read_count_mat(fn, meta_df)
+read_count_mat(fn, meta_df = NULL)
 }
 \arguments{
 \item{fn}{path to a file name typically a csv file.}

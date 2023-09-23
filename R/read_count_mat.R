@@ -12,9 +12,13 @@
 #' fn <- file.path("tests", "test_data", "gene_count_matrix_fixed.csv")
 #' count_mat <- read_count_mat(fn)
 #' }
-read_count_mat <- function(fn, meta_df) {
+read_count_mat <- function(fn, meta_df = NULL) {
   if(!fs::is_file(fn)) {
     stop("Need count file.")
+  }
+
+  if(is.null(meta_df)) {
+    stop("Need a meta data data-frame")
   }
 
   if(!is.data.frame(meta_df)) {
@@ -22,12 +26,19 @@ read_count_mat <- function(fn, meta_df) {
   }
 
   fn |>
-    readr::read_delim(",") |>
-    tidyr::pivot_longer(cols = !c("gene_id"), names_to = "sample", values = "counts") |>
+    readr::read_delim(",", show_col_types = FALSE) |>
+    tidyr::pivot_longer(!starts_with("gene_id"),
+                        names_to = "sample", values_to = "counts") |>
     dplyr::group_by(gene_id, sample) |>
-    dplyr::summarize(fixed_counts = sum(counts)) |>
-    tidyr::pivot_longer(id_cols = "gene_id", names_from = "sample", values_from = "fixed_counts",
-                        value_fill = 0) |>
+    dplyr::summarize(fixed_counts = sum(counts,
+                                        na.rm = TRUE)) |>
+    dplyr::ungroup() |>
+    tidyr::pivot_wider(id_cols = gene_id,
+                        names_from = sample,
+                        values_from = fixed_counts,
+                        values_fill = 0) |>
+    as.data.frame() |>
+    tibble::column_to_rownames(var = "gene_id") |>
     as.matrix() -> count_mat
   count_mat <- count_mat[, rownames(meta_df)]
   count_mat

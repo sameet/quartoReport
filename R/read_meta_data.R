@@ -12,7 +12,7 @@
 read_meta_data <- function(fn) {
   fn |>
     readr::read_delim("\t", show_col_types = FALSE) |>
-    setNames(c("sample", "condition")) |>
+    stats::setNames(c("sample", "condition")) |>
     as.data.frame() -> meta_df
   rownames(meta_df) <- meta_df$sample
   meta_df
