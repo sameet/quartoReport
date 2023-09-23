@@ -29,6 +29,9 @@ format:
   ipynb:
     markdown-headings: atx
     prefer-html: true
+execute:
+  warning: false
+  echo: true
 params:
   count_mat: \"gene_count_matrix.csv\"
   sample_sheet: \"sample-sheet.txt\"
