@@ -19,10 +19,12 @@ compose_qmd <- function(ofn = NULL) {
   # gather all components
   opening_yaml <- template_yaml(author = "Sameet Mehta", email = "sameet.mehta@yale.edu")
   setup_part <- make_setup_qmd()
+  qc_bit <- make_qc_bit(fn = "params$metrics")
 
   sink(ofn)
   print(opening_yaml)
   print(setup_part)
+  print(qc_bit)
   sink()
 
   ofn
