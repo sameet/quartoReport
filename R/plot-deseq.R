@@ -124,6 +124,37 @@ make_box_single <- function(res_df, ...) {
   p_box_single
 }
 
+
+#' Create multipanel boxplot one gene per panel
+#'
+#' @param res_df Single result data frame
+#' @param ... Other parameters to make_box_plot_df function
+#'
+#' @return
+#' @export
+#'
+#' @examples
+make_box_multi <- function(res_df, ...) {
+  use_l <- make_box_plot_df(res_df, ...)
+
+  use_l$box_p_df |>
+    ggplot2::ggplot(ggplot2::aes(x = gene_id, y = expression, fill = condition)) +
+    ggplot2::geom_boxplot(position = ggplot2::position_dodge2(width = 0.95)) +
+    ggplot2::facet_wrap(~ gene_id, scale = "free_x") +
+    ggplot2::scale_fill_manual(values = c("#2222FF", "#FF2222")) +
+    ggplot2::theme_minimal() +
+    ggplot2::theme(strip.text = ggplot2::element_text(size = 7),
+                   strip.background = ggplot2::element_rect(fill = "#CBCBCB"),
+                   axis.text.x.bottom = ggplot2::element_blank()) +
+    ggplot2::labs(title = use_l$name,
+         x = "",
+         y = "Normalized Expression",
+         fill = "Condition(s)") +
+    my_rnaseq_theme() -> p_box_multi
+
+  p_box_multi
+}
+
 #' Make a volcano plot from the result data-frame.
 #'
 #' @param res_df Results data frame.
