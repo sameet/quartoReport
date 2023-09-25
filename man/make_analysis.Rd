@@ -4,12 +4,7 @@
 \alias{make_analysis}
 \title{Create the analysis part of the text}
 \usage{
-make_analysis(samplesheet = params$samplesheet, counts = params$counts)
-}
-\arguments{
-\item{samplesheet}{sample-sheet provided in params.}
-
-\item{counts}{count file path provided in params.}
+make_analysis()
 }
 \value{
 analysis_str analysis string that will put in place all the correct bits and pieces to actually perform the analysis.

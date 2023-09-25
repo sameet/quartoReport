@@ -13,4 +13,18 @@ Config/testthat/edition: 3
 Imports: 
     slushy,
     usethis,
-    devtools
+    devtools,
+    testthat,
+    roxygen2,
+    dplyr,
+    fs,
+    readr,
+    rlang,
+    stringr,
+    tibble,
+    tidyr,
+    tidyselect,
+    BiocManager,
+    DESeq2
+Suggests:
+    qs
