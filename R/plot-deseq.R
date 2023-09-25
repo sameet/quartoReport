@@ -5,11 +5,11 @@
 #' @param label_n label these many genes.
 #'
 #' @return l a list of data frames that can be used to make plots.
-#' @export
+# #' @export
 #'
 #' @examples
 #' \dontrun{
-#' plot_df <- make_plot_df(res_df)
+#' use_l <- make_plot_df(res_df)
 #' }
 make_plot_df <- function(res_df, thresh = 0.05, label_n = 30){
   comparison <- extract_comparison(res_df)
@@ -17,7 +17,8 @@ make_plot_df <- function(res_df, thresh = 0.05, label_n = 30){
   res_df |>
     dplyr::filter(!is.na(padj)) |>
     dplyr::mutate(significant = ifelse(padj <= thresh, "yes", "no")) |>
-    dplyr::mutate(updown = ifelse(log2FoldChange > 0, "up", "down")) -> plot_df
+    dplyr::mutate(updown = ifelse(log2FoldChange > 0, "up", "down")) |>
+    dplyr::mutate(updown = factor(updown, levels = c("up", "down"))) -> plot_df
 
   op_l <- list(
     plot_df = plot_df,
@@ -28,9 +29,105 @@ make_plot_df <- function(res_df, thresh = 0.05, label_n = 30){
   op_l
 }
 
+#' My theme for plotting
+#'
+#' @return themed plot
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' p + my_rnaseq_theme()
+#' }
+my_rnaseq_theme <- function(){
+  ggplot2::theme(
+    panel.border = ggplot2::element_rect(color = "#0C0C0C", fill = NA, linetype = 4, linewidth = 0.2),
+    panel.background = ggplot2::element_rect(fill = "#F6F6F9"),
+    axis.text = ggplot2::element_text(color = "#0B0B0B", family = "Sans Serif"),
+    legend.background = ggplot2::element_rect(fill = "#F6F6F9", linetype = 3, linewidth = 0.25)
+  )
+}
+
+#' Title
+#'
+#' @param res_df Results data frame for one comparison
+#' @param vs_data Variance stabilized count data for the experiment
+#' @param meta_df The meta-data frame
+#' @param thresh Threshold to determne significance. Default padj <= 0.05
+#' @param label_n Number of genes to plot.
+#'
+#' @return l a list of information to make plots
+# #' @export
+#'
+#' @examples
+#' \dontrun{
+#' use_l <- make_box_plot_df(res_df, vs_data, meta_df)
+#' }
+make_box_plot_df <- function(res_df, vs_data, meta_df, thresh = 0.05, label_n = 30) {
+  use_l <- make_plot_df(res_df, thresh = thresh, label_n = label_n)
+
+  conditions <- unlist(strsplit(use_l$name, " -- "))
+
+  use_samples <- meta_df |>
+    dplyr::filter(condition %in% conditions) |>
+    dplyr::select(sample, condition)
+
+  use_l$plot_df |>
+    dplyr::filter(significant == "yes") |>
+    dplyr::arrange(desc(abs(log2FoldChange))) |>
+    dplyr::slice_head(n = label_n) |>
+    dplyr::arrange(log2FoldChange) |>
+    dplyr::pull(gene_id) -> genes
+
+  vs_data@assays@data[[1]] |>
+    as.data.frame() |>
+    tibble::rownames_to_column(var = "gene_id") |>
+    dplyr::filter(gene_id %in% genes) |>
+    tidyr::pivot_longer(cols = !c("gene_id"), names_to = "sample", values_to = "expression") |>
+    dplyr::inner_join(use_samples) |>
+    dplyr::mutate(gene_id = factor(gene_id, levels = genes)) -> box_p_df
+
+  op_l <- list(
+    box_p_df = box_p_df,
+    name = use_l$name
+  )
+
+  op_l
+}
+
+#' Make a single panel boxplot
+#'
+#' @param res_df Results data frame for one comparison
+#' @param ... Other parameters to get the boxplot data-frame
+#'
+#' @return boxplot a ggplot2 object
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' box_p <- make_box_single(res_df, vs_data, meta_df)
+#' }
+make_box_single <- function(res_df, ...) {
+  use_l <- make_box_plot_df(res_df, ...)
+
+  use_l$box_p_df |>
+    ggplot2::ggplot(ggplot2::aes(x = gene_id, y = expression, fill = condition)) +
+    ggplot2::geom_boxplot(position = ggplot2::position_dodge2()) +
+    ggplot2::theme_minimal() +
+    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, hjust = 1, vjust = 0.5),
+                   text = ggplot2::element_text(color = "#0F0F0F")) +
+    ggplot2::labs(title = use_l$name,
+         x = "Gene ID",
+         y = "Normalized Expression",
+         fill = "Condition(s)") +
+    ggplot2::scale_fill_manual(values = c("#2222FF", "#FF2222")) +
+    my_rnaseq_theme() -> p_box_single
+  p_box_single
+}
+
 #' Make a volcano plot from the result data-frame.
 #'
 #' @param res_df Results data frame.
+#' @param ... Other parameters for the make plot df function.
 #'
 #' @return volcano_p a volcano plot, a ggplot2 graph/object
 #' @export
@@ -40,7 +137,7 @@ make_plot_df <- function(res_df, thresh = 0.05, label_n = 30){
 #' volcano_p <- make_volcano(res_df)
 #' }
 make_volcano <- function(res_df, ...) {
-  use_l = make_plot_df(res_df, ...)
+  use_l <- make_plot_df(res_df, ...)
 
   use_l$plot_df |>
     dplyr::filter(significant == "yes") |>
@@ -60,16 +157,17 @@ make_volcano <- function(res_df, ...) {
   p +
     ggplot2::theme_minimal() +
     ggplot2::labs(title = use_l$name,
-         x = "log2(Fold Change)",
-         color = "Up/Down Expression",
-         y = "-10 x log10(padj)") -> volcano_p
+                  x = "log2(Fold Change)",
+                  color = "Up/Down Expression",
+                  y = "-10 x log10(padj)") +
+    ggplot2::scale_color_manual(values = c("#2211FF", "#FF1122")) -> volcano_p
 
   volcano_p
 }
 
 #' Extract compairson from gven result file.
 #'
-#' @param res_df
+#' @param res_df result data frame
 #'
 #' @return str comparison
 #'

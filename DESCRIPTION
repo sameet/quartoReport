@@ -32,6 +32,7 @@ Imports:
     utils,
     SummarizedExperiment,
     magrittr,
-    ggrepel
+    ggrepel,
+    ggplot2
 Suggests:
     qs

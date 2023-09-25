@@ -7,7 +7,7 @@
 extract_comparison(res_df)
 }
 \arguments{
-\item{res_df}{}
+\item{res_df}{result data frame}
 }
 \value{
 str comparison

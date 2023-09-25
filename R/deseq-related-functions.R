@@ -111,7 +111,7 @@ get_comp_from_dds <- function(dds) {
 #' Get single result from combination df, and dds object
 #'
 #' @param dds object of class DESeqDataSet
-#' @param df one row of a combination df
+#' @param comp_df one row of a combination df
 #'
 #' @return res_df A data frame with result comparing the two conditions.
 #' @examples

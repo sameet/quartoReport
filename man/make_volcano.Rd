@@ -4,12 +4,12 @@
 \alias{make_volcano}
 \title{Make a volcano plot from the result data-frame.}
 \usage{
-make_volcano(res_df, thresh = 0.05)
+make_volcano(res_df, ...)
 }
 \arguments{
 \item{res_df}{Results data frame.}
 
-\item{thresh}{Threshold to determine sigificance. This is a cutoff used on adjusted pvalue.}
+\item{...}{Other parameters for the make plot df function.}
 }
 \value{
 volcano_p a volcano plot, a ggplot2 graph/object

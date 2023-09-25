@@ -9,7 +9,7 @@ get_single_result(dds, comp_df)
 \arguments{
 \item{dds}{object of class DESeqDataSet}
 
-\item{df}{one row of a combination df}
+\item{comp_df}{one row of a combination df}
 }
 \value{
 res_df A data frame with result comparing the two conditions.
