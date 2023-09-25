@@ -29,6 +29,8 @@ Imports:
     quarto,
     rmarkdown,
     stats,
-    utils
+    utils,
+    SummarizedExperiment,
+    magrittr
 Suggests:
     qs

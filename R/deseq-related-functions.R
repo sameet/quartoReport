@@ -77,6 +77,11 @@ get_results_from_dds <- function(dds = dds,
 #' }
 get_all_results <- function(dds){
   use_comp_df <- get_comp_from_dds(dds)
+  lapply(seq_len(nrow(comp_df)), function(i) {
+    df <- get_single_result(dds, use_comp_df[i, ])
+  }) %>%
+    do.call("rbind", .) -> all_res_df
+  all_res_df
 }
 
 #' Extract possible comparisons from dds colData slot
@@ -90,8 +95,7 @@ get_all_results <- function(dds){
 #' comb_df <- get_comp_from_dds(dds)
 #' }
 get_comp_from_dds <- function(dds) {
-  dds |>
-    colData() |>
+  SummarizedExperiment::colData(dds) |>
     as.data.frame() |>
     dplyr::pull(condition) |>
     as.character() |>
@@ -116,9 +120,12 @@ get_comp_from_dds <- function(dds) {
 #' }
 get_single_result <- function(dds, comp_df) {
   cond_l <- comp_df |> as.list()
-  res <- results(dds, contrast = c("condition", cond_l$c1, cond_l$c2))
-  res <- res %>% as.data.frame() %>%
-    rownames_to_column(var = "gene_id")
+  cond_str <- paste0(unlist(cond_l), collapse = " -- ")
+  res <- DESeq2::results(dds, contrast = c("condition", cond_l$c1, cond_l$c2))
+  res <- res %>%
+    as.data.frame() %>%
+    tibble::rownames_to_column(var = "gene_id") %>%
+    dplyr::mutate(comparison = cond_str)
 
   res
 }
