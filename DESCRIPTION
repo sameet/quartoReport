@@ -25,6 +25,8 @@ Imports:
     tidyr,
     tidyselect,
     BiocManager,
-    DESeq2
+    DESeq2,
+    quarto,
+    rmarkdown
 Suggests:
     qs
