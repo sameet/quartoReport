@@ -12,8 +12,8 @@
 #' opnening_yaml <- template_yaml()
 #' }
 template_yaml <- function(title = "RNA-Seq Report",
-                          author = "<replace with your name>",
-                          email = "<replace with your email") {
+                          author = "Sameet",
+                          email = "sameet.mehta@yale.edu") {
   opening_yaml <- stringr::str_glue("
 ---
 title: \"{title}\"
@@ -42,5 +42,3 @@ params:
   ")
   opening_yaml
 }
-
-
