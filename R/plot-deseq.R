@@ -42,7 +42,7 @@ my_rnaseq_theme <- function(){
   ggplot2::theme(
     panel.border = ggplot2::element_rect(color = "#0C0C0C", fill = NA, linetype = 4, linewidth = 0.2),
     panel.background = ggplot2::element_rect(fill = "#F6F6F9"),
-    axis.text = ggplot2::element_text(color = "#0B0B0B", family = "Sans Serif"),
+    axis.text = ggplot2::element_text(color = "#0B0B0B"),
     legend.background = ggplot2::element_rect(fill = "#F6F6F9", linetype = 3, linewidth = 0.25)
   )
 }
@@ -130,10 +130,13 @@ make_box_single <- function(res_df, ...) {
 #' @param res_df Single result data frame
 #' @param ... Other parameters to make_box_plot_df function
 #'
-#' @return
+#' @return multi-faceted-plot a multifacted boxplot ggplot object
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' make_box_multi <- make_box_multi(res_df)
+#' }
 make_box_multi <- function(res_df, ...) {
   use_l <- make_box_plot_df(res_df, ...)
 

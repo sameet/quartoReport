@@ -33,6 +33,7 @@ Imports:
     SummarizedExperiment,
     magrittr,
     ggrepel,
-    ggplot2
+    ggplot2,
+    showtext
 Suggests:
     qs

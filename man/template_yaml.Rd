@@ -6,8 +6,8 @@
 \usage{
 template_yaml(
   title = "RNA-Seq Report",
-  author = "<replace with your name>",
-  email = "<replace with your email"
+  author = "Sameet",
+  email = "sameet.mehta@yale.edu"
 )
 }
 \arguments{
