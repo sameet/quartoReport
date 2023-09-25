@@ -119,6 +119,7 @@ get_comp_from_dds <- function(dds) {
 #' res_df <- get_single_result(dds, comp_df)
 #' }
 get_single_result <- function(dds, comp_df) {
+  # the same function will allow returning results from specific contrasts file.
   cond_l <- comp_df |> as.list()
   cond_str <- paste0(unlist(cond_l), collapse = " -- ")
   res <- DESeq2::results(dds, contrast = c("condition", cond_l$c1, cond_l$c2))

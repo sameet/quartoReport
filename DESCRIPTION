@@ -31,6 +31,7 @@ Imports:
     stats,
     utils,
     SummarizedExperiment,
-    magrittr
+    magrittr,
+    ggrepel
 Suggests:
     qs
