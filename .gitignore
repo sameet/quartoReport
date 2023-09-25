@@ -53,5 +53,5 @@ tests/test_data/*
 
 # Other files
 .Rbuildignore
-
+renv/*
 
