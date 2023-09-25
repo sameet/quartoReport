@@ -28,6 +28,7 @@ make_deseq_object <- function(count_mat, meta_df) {
   dds
 }
 
+
 #' Stabilize count data using vst
 #'
 #' @param dds a DESeq2 object
@@ -44,3 +45,36 @@ stabilize_count_data <- function(dds) {
   vs_data
 }
 
+#' Get results from a dds object
+#'
+#' @param dds An object of class DESeqExperiment
+#' @param df A data frame with names of conditions.
+#'
+#' @return Gives a data-frame for the results with those comparisons.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' df <- get_results_from_dds(dds, condition_df)
+#' }
+get_results_from_dds <- function(dds = dds,
+                                 df = NULL) {
+  res_df <- get_all_results(dds)
+
+}
+
+
+#' Get results for all contrasts.
+#'
+#' @param dds A DESeqExperiment object.
+#'
+#' @return all_res_df A data-frame with results for all the contrasts.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' all_res_df <- get_all_results(dds)
+#' }
+get_all_results <- function(dds){
+
+}
