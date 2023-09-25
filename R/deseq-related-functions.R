@@ -76,5 +76,49 @@ get_results_from_dds <- function(dds = dds,
 #' all_res_df <- get_all_results(dds)
 #' }
 get_all_results <- function(dds){
+  use_comp_df <- get_comp_from_dds(dds)
+}
 
+#' Extract possible comparisons from dds colData slot
+#'
+#' @param dds A DESeqDataSet Object
+#'
+#' @return comb_df a data frame with possible combination of comparisons
+#'
+#' @examples
+#' \dontrun{
+#' comb_df <- get_comp_from_dds(dds)
+#' }
+get_comp_from_dds <- function(dds) {
+  dds |>
+    colData() |>
+    as.data.frame() |>
+    dplyr::pull(condition) |>
+    as.character() |>
+    unique() |>
+    combn(2) |>
+    t() |>
+    as.data.frame() |>
+    setNames(c("c1", "c2")) -> comp_df
+
+  comp_df
+}
+
+#' Get single result from combination df, and dds object
+#'
+#' @param dds object of class DESeqDataSet
+#' @param df one row of a combination df
+#'
+#' @return res_df A data frame with result comparing the two conditions.
+#' @examples
+#' \dontrun{
+#' res_df <- get_single_result(dds, comp_df)
+#' }
+get_single_result <- function(dds, comp_df) {
+  cond_l <- comp_df |> as.list()
+  res <- results(dds, contrast = c("condition", cond_l$c1, cond_l$c2))
+  res <- res %>% as.data.frame() %>%
+    rownames_to_column(var = "gene_id")
+
+  res
 }

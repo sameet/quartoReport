@@ -27,6 +27,8 @@ Imports:
     BiocManager,
     DESeq2,
     quarto,
-    rmarkdown
+    rmarkdown,
+    stats,
+    utils
 Suggests:
     qs
