@@ -59,8 +59,15 @@ stabilize_count_data <- function(dds) {
 #' }
 get_results_from_dds <- function(dds = dds,
                                  df = NULL) {
-  res_df <- get_all_results(dds)
-
+  if(is.null(df)){
+    res_df <- get_all_results(dds)
+  } else {
+    lapply(seq_len(nrow(df)), function(i) {
+      get_single_result(dds = dds, comp_df = df[1, ])
+    }) %>%
+      do.call("rbind", ".") -> res_df
+  }
+  res_df
 }
 
 
