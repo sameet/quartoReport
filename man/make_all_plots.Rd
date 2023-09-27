@@ -4,7 +4,7 @@
 \alias{make_all_plots}
 \title{Title}
 \usage{
-make_all_plots(res_df, vs_data, thresh = 0.05, label_n = 30, op_dir)
+make_all_plots(res_df, vs_data, thresh = 0.05, label_n = 30, op_dir = NULL)
 }
 \arguments{
 \item{res_df}{A result data frame for a single comparison}
@@ -13,9 +13,9 @@ make_all_plots(res_df, vs_data, thresh = 0.05, label_n = 30, op_dir)
 
 \item{thresh}{Threshold to be used for calling significant genes}
 
-\item{op_dir}{Output directory where the plots should be saved.}
+\item{label_n}{Number of genes to be lablled, or number of boxes in boxplot}
 
-\item{...}{downstream processing options.}
+\item{op_dir}{Output directory where the plots should be saved.}
 }
 \value{
 plot_l A list of plots.

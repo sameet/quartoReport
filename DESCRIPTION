@@ -12,34 +12,23 @@ RoxygenNote: 7.2.3
 Config/testthat/edition: 3
 Imports: 
     slushy,
-    usethis,
     devtools,
-    testthat,
-    roxygen2,
-    dplyr,
-    fs,
-    readr,
-    rlang,
+    SummarizedExperiment,
+    ggplotify,
+    magrittr,
+    ggplot2,
+    DESeq2,
+    ggrepel,
+    ggupset,
     stringr,
+    pheatmap,
     tibble,
     tidyr,
     tidyselect,
-    BiocManager,
-    DESeq2,
-    quarto,
-    rmarkdown,
-    stats,
-    utils,
-    SummarizedExperiment,
-    magrittr,
-    ggrepel,
-    ggplot2,
-    showtext,
-    ggupset,
-    pheatmap,
     RColorBrewer,
-    gridExtra,
-    grDevices,
-    ggplotify
-Suggests:
-    qs
+    dplyr,
+    fs,
+    readr,
+    rlang
+Suggests: 
+    testthat

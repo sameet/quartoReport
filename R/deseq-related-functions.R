@@ -137,3 +137,48 @@ get_single_result <- function(dds, comp_df) {
 
   res
 }
+
+#' Save result files.
+#'
+#' @param res_df Result data frame for a single result
+#' @param op_dir Output directory
+#' @param thresh Threshold to determine significance (default padj <= 0.05)
+#'
+#' @return No return value.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' save_results(res_df, op_dir = tempdir())
+#' }
+save_results <- function(res_df, op_dir, thresh = 0.05) {
+  # save the result table and significant genes table for a comparison
+  if(is.null(op_dir)) {
+    stop("Needs an output directory to save the files")
+  } else {
+    message(paste("Saving files to :", op_dir))
+  }
+
+  res_df %>%
+    extract_comparisons() %>%
+    gsub(" -- ", "--", .) -> ofn_prefix
+
+  n_sig_genes <- res_df |>
+    dplyr::filter(padj <= thresh) |>
+    dplyr::pull(gene_id) |>
+    length()
+
+  ofn_all <- file.path(op_dir, paste(ofn_prefix, "_all-results.txt", sep = ""))
+  ofn_sig <-
+  res_df |>
+    readr::write_delim(ofn_all, delim = "\t")
+
+  if(n_sig_genes > 0) {
+    ofn_sig <- file.path(op_dir, paste(ofn_prefix, "_sig-results.txt", sep = ""))
+    res_df |>
+      dplyr::filter(padj <= thresh) |>
+      readr::write_delim(ofn_sig, delim = "\t")
+  } else {
+    message("No significant gene detected for the comparison ", ofn_prefix)
+  }
+}
