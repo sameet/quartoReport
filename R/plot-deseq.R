@@ -317,6 +317,11 @@ make_heatmap <- function(res_df, meta_df, vs_data, thresh = 0.05) {
     dplyr::filter(condition %in% conds) |>
     dplyr::select(condition)
 
+  my_colors <- list(
+    condition = c("#F02211", "#1122F0")
+  )
+  names(my_colors$condition) <- conds
+
   # make the heatmap
   hm_df %>%
     tibble::column_to_rownames(var = "gene_id") %>%
@@ -326,14 +331,34 @@ make_heatmap <- function(res_df, meta_df, vs_data, thresh = 0.05) {
                        cluster_rows = TRUE,
                        cluster_cols = TRUE, main = "Heatmap (Significant Genes)",
                        annotation_col = col_annot_df,
+                       annotation_colors = my_colors,
                        show_rownames = ifelse(nrow(.) <= 30, TRUE, FALSE),
-                       plot = F,
-                       filename = ofn) -> hm
+                       silent = T) -> hm
   op_l <- list(
     hm_df = hm_df,
     col_annot_df = col_annot_df,
-    hm = hm
+    hm = hm,
+    ofn = ofn
   )
 
   op_l
+}
+
+#' save function for heatmap
+#'
+#' @param use_l Output from the make heatmap function call
+#' @param use_dir Directory where you want to heatmap saved.
+#'
+#' @return returns nothing write the heatmap to the given folder with appropriate name.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' save_hm_pdf(use_l, "~/Desktop")
+#' }
+save_hm_pdf <- function(use_l, use_dir) {
+  pdf(file = file.path(use_dir, gsub("png", "pdf", use_l$ofn)))
+  grid::grid.newpage()
+  grid::grid.draw(use_l$hm$gtable)
+  dev.off()
 }
