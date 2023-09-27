@@ -9,7 +9,7 @@ get_results_from_dds(dds = dds, df = NULL)
 \arguments{
 \item{dds}{An object of class DESeqExperiment}
 
-\item{df}{A data frame with names of conditions.}
+\item{df}{A data frame with contrasts, one on each row. Each row contains only two columns, named c1, and c2}
 }
 \value{
 Gives a data-frame for the results with those comparisons.
