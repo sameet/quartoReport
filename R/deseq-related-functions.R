@@ -120,6 +120,7 @@ get_comp_from_dds <- function(dds) {
 #' @param dds object of class DESeqDataSet
 #' @param comp_df one row of a combination df
 #'
+#' @export
 #' @return res_df A data frame with result comparing the two conditions.
 #' @examples
 #' \dontrun{

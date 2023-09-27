@@ -1,3 +1,4 @@
+source("renv/activate.R")
 
 ### SLUSHY RPROFILE - START ###
 ## Set slushy global options and environment variables
