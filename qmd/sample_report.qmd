@@ -12,6 +12,7 @@ params:
   contrasts_fn: "~/data/reporter_testing/deseq2_2_samples/contrasts.txt"
   count_fn: "~/data/reporter_testing/deseq2_2_samples/gene_count_matrix_fixed.csv"
   op_dir: "~/data/reporter_testing/testing_quartoReport/"
+  metrics: null
   use_threshold: 0.05
 ---
 
