@@ -18,6 +18,7 @@ Create an upSet plot
 \examples{
 \dontrun{
 upset_plot <- make_upset_plot(upset_df) # when you have created the upset_df
-upset_plot <- make_upset_plot(make_upset_df(dds, meta_df, contrasts_df, thresh)) # when you want to get to it directly.
+upset_plot <- make_upset_plot(make_upset_df(dds, meta_df, contrasts_df, thresh))
+# when you want to get to it directly.
 }
 }

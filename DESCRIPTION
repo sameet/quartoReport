@@ -38,6 +38,7 @@ Imports:
     ggupset,
     pheatmap,
     RColorBrewer,
-    gridExtra
+    gridExtra,
+    grDevices
 Suggests:
     qs

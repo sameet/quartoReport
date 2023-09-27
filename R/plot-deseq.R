@@ -249,7 +249,8 @@ make_upset_df <- function(dds, meta_df, contrasts_df = NULL, thresh = 0.05) {
 #' @examples
 #' \dontrun{
 #' upset_plot <- make_upset_plot(upset_df) # when you have created the upset_df
-#' upset_plot <- make_upset_plot(make_upset_df(dds, meta_df, contrasts_df, thresh)) # when you want to get to it directly.
+#' upset_plot <- make_upset_plot(make_upset_df(dds, meta_df, contrasts_df, thresh))
+#' # when you want to get to it directly.
 #' }
 make_upset_plot <- function(upset_df) {
   upset_df |>
@@ -358,6 +359,25 @@ make_heatmap <- function(res_df, meta_df, vs_data, thresh = 0.05) {
 #' }
 save_hm_pdf <- function(use_l, use_dir) {
   pdf(file = file.path(use_dir, gsub("png", "pdf", use_l$ofn)))
+  grid::grid.newpage()
+  grid::grid.draw(use_l$hm$gtable)
+  dev.off()
+}
+
+#' save function for heatmap (png)
+#'
+#' @param use_l Output from the make heatmap function call
+#' @param use_dir Directory where you want to heatmap saved.
+#'
+#' @return returns nothing write the heatmap to the given folder with appropriate name.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' save_hm_pdf(use_l, "~/Desktop")
+#' }
+save_hm_png <- function(use_l, use_dir) {
+  png(file = file.path(use_dir, use_l$ofn))
   grid::grid.newpage()
   grid::grid.draw(use_l$hm$gtable)
   dev.off()
