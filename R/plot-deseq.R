@@ -271,3 +271,69 @@ make_upset_plot <- function(upset_df) {
     ) -> upset_plot
   upset_plot
 }
+
+#' Title
+#'
+#' @param res_df Result data frame for a single comparison
+#' @param meta_df Meta-data used in the analysis
+#' @param vs_data Normalized gene expression after vst transformation
+#' @param thresh Threshold to call significantly differentially expressed genes.
+#'
+#' @return op_l A list of objects that can be further manipulated.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' op_l <- make_heatmap(res_df, meta_df, vs_data) # will save a heatmap.png in the current directory
+#' }
+make_heatmap <- function(res_df, meta_df, vs_data, thresh = 0.05) {
+  # Make a heatmap for a single comparison.  Include all the significant genes.
+
+  # get the significant genes list from the results
+  res_df |>
+    dplyr::filter(padj <= thresh) |>
+    dplyr::pull(gene_id) -> sig_genes
+
+  # get the samples belonging to the conditions
+  conds <- extract_comparisons(res_df = res_df) |>
+    strsplit(" -- ") |>
+    unlist()
+  samples <- meta_df |>
+    dplyr::filter(condition %in% conds)
+
+  ofn <- paste(paste0(conds, collapse = "--"), "_sig_hm.png", sep = "")
+
+  # get normalized expression counts for significant genes.
+  vs_data@assays@data[[1]] |>
+    as.data.frame() |>
+    tibble::rownames_to_column(var = "gene_id") |>
+    dplyr::filter(gene_id %in% sig_genes) |>
+    tidyr::pivot_longer(cols = !c("gene_id"), names_to = "sample", values_to = "expression") |>
+    dplyr::inner_join(samples) |>
+    tidyr::pivot_wider(id_cols = gene_id, names_from = sample, values_from = expression) -> hm_df
+
+  # get annotation color dr
+  col_annot_df <- meta_df |>
+    dplyr::filter(condition %in% conds) |>
+    dplyr::select(condition)
+
+  # make the heatmap
+  hm_df %>%
+    tibble::column_to_rownames(var = "gene_id") %>%
+    pheatmap::pheatmap(color = colorRampPalette(rev(RColorBrewer::brewer.pal(9, "RdGy")))(100),
+                       border_color = NA,
+                       scale = "row",
+                       cluster_rows = TRUE,
+                       cluster_cols = TRUE, main = "Heatmap (Significant Genes)",
+                       annotation_col = col_annot_df,
+                       show_rownames = ifelse(nrow(.) <= 30, TRUE, FALSE),
+                       plot = F,
+                       filename = ofn) -> hm
+  op_l <- list(
+    hm_df = hm_df,
+    col_annot_df = col_annot_df,
+    hm = hm
+  )
+
+  op_l
+}
