@@ -11,24 +11,24 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Config/testthat/edition: 3
 Imports: 
-    slushy,
-    devtools,
-    SummarizedExperiment,
-    ggplotify,
-    magrittr,
-    ggplot2,
+    tidyr,
+    dplyr,
     DESeq2,
+    SummarizedExperiment,
+    RColorBrewer,
+    ggplot2,
+    ggplotify,
     ggrepel,
     ggupset,
-    stringr,
     pheatmap,
-    tibble,
-    tidyr,
-    tidyselect,
-    RColorBrewer,
-    dplyr,
-    fs,
     readr,
-    rlang
-Suggests: 
-    testthat
+    stringr,
+    tidyselect,
+    magrittr,
+    fs,
+    rlang,
+    tibble
+Suggests:
+    testthat,
+    slushy,
+    devtools
