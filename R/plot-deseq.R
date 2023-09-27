@@ -12,7 +12,7 @@
 #' use_l <- make_plot_df(res_df)
 #' }
 make_plot_df <- function(res_df, thresh = 0.05, label_n = 30){
-  comparison <- extract_comparison(res_df)
+  comparison <- extract_comparisons(res_df)
 
   res_df |>
     dplyr::filter(!is.na(padj)) |>
@@ -28,6 +28,48 @@ make_plot_df <- function(res_df, thresh = 0.05, label_n = 30){
 
   op_l
 }
+
+#' Make a volcano plot from the result data-frame.
+#'
+#' @param res_df Results data frame.
+#' @param ... Other parameters for the make plot df function.
+#'
+#' @return volcano_p a volcano plot, a ggplot2 graph/object
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' volcano_p <- make_volcano(res_df)
+#' }
+make_volcano <- function(res_df, ...) {
+  use_l <- make_plot_df(res_df, ...)
+
+  use_l$plot_df |>
+    dplyr::filter(significant == "yes") |>
+    dplyr::arrange(desc(abs(log2FoldChange))) |>
+    dplyr::slice_head(n = use_l$label_n) -> volcano_annot_df
+
+  use_l$plot_df |>
+    ggplot2::ggplot(ggplot2::aes(x = log2FoldChange,
+                                 y = -10*log10(padj))) +
+    ggplot2::geom_point(size = 0.2, col = "grey90", alpha = 0.1) -> p
+
+  p + ggplot2::geom_point(data = use_l$plot_df |>
+                            dplyr::filter(significant == "yes"),
+                          ggplot2::aes(col = updown)) +
+    ggrepel::geom_text_repel(data = volcano_annot_df,
+                             ggplot2::aes(label = gene_id)) -> p
+  p +
+    ggplot2::theme_minimal() +
+    ggplot2::labs(title = use_l$name,
+                  x = "log2(Fold Change)",
+                  color = "Up/Down Expression",
+                  y = "-10 x log10(padj)") +
+    ggplot2::scale_color_manual(values = c("#2211FF", "#FF1122")) -> volcano_p
+
+  volcano_p
+}
+
 
 #' My theme for plotting
 #'
@@ -156,47 +198,6 @@ make_box_multi <- function(res_df, ...) {
     my_rnaseq_theme() -> p_box_multi
 
   p_box_multi
-}
-
-#' Make a volcano plot from the result data-frame.
-#'
-#' @param res_df Results data frame.
-#' @param ... Other parameters for the make plot df function.
-#'
-#' @return volcano_p a volcano plot, a ggplot2 graph/object
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' volcano_p <- make_volcano(res_df)
-#' }
-make_volcano <- function(res_df, ...) {
-  use_l <- make_plot_df(res_df, ...)
-
-  use_l$plot_df |>
-    dplyr::filter(significant == "yes") |>
-    dplyr::arrange(desc(abs(log2FoldChange))) |>
-    dplyr::slice_head(n = use_l$label_n) -> volcano_annot_df
-
-  use_l$plot_df |>
-    ggplot2::ggplot(ggplot2::aes(x = log2FoldChange,
-                                 y = -10*log10(padj))) +
-    ggplot2::geom_point(size = 0.2, col = "grey90", alpha = 0.1) -> p
-
-  p + ggplot2::geom_point(data = use_l$plot_df |>
-                            dplyr::filter(significant == "yes"),
-                          ggplot2::aes(col = updown)) +
-    ggrepel::geom_text_repel(data = volcano_annot_df,
-                             ggplot2::aes(label = gene_id)) -> p
-  p +
-    ggplot2::theme_minimal() +
-    ggplot2::labs(title = use_l$name,
-                  x = "log2(Fold Change)",
-                  color = "Up/Down Expression",
-                  y = "-10 x log10(padj)") +
-    ggplot2::scale_color_manual(values = c("#2211FF", "#FF1122")) -> volcano_p
-
-  volcano_p
 }
 
 #' Extract compairson from gven result file.

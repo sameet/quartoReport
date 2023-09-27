@@ -2,6 +2,7 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+#' @importFrom ggplotify as.ggplot
 #' @importFrom grDevices colorRampPalette
 #' @importFrom grDevices dev.off
 #' @importFrom grDevices pdf

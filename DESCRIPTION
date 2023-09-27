@@ -39,6 +39,7 @@ Imports:
     pheatmap,
     RColorBrewer,
     gridExtra,
-    grDevices
+    grDevices,
+    ggplotify
 Suggests:
     qs
