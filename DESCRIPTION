@@ -34,6 +34,7 @@ Imports:
     magrittr,
     ggrepel,
     ggplot2,
-    showtext
+    showtext,
+    ggupset
 Suggests:
     qs

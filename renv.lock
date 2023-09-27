@@ -887,6 +887,22 @@
       ],
       "Hash": "92edfac53774706b4d6099f3ee6f6306"
     },
+    "ggupset": {
+      "Package": "ggupset",
+      "Version": "0.3.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "ggplot2",
+        "grid",
+        "gtable",
+        "rlang",
+        "scales",
+        "tibble"
+      ],
+      "Hash": "8e9eb92bf465601c07d17c5e8b75dce1"
+    },
     "gh": {
       "Package": "gh",
       "Version": "1.4.0",
@@ -1788,6 +1804,29 @@
       ],
       "Hash": "438b99792adbe82a8329ad8697d45afe"
     },
+    "showtext": {
+      "Package": "showtext",
+      "Version": "0.9-6",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "grDevices",
+        "showtextdb",
+        "sysfonts"
+      ],
+      "Hash": "c0fd332d248b195bbcb94a0dfda37b0d"
+    },
+    "showtextdb": {
+      "Package": "showtextdb",
+      "Version": "3.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "sysfonts",
+        "utils"
+      ],
+      "Hash": "c12e756cf947e58b0f2c2a520521a5a8"
+    },
     "slushy": {
       "Package": "slushy",
       "Version": "0.1.0.9000",
@@ -1871,6 +1910,13 @@
       "Source": "Repository",
       "Repository": "RSPM",
       "Hash": "3a1be13d68d47a8cd0bfd74739ca1555"
+    },
+    "sysfonts": {
+      "Package": "sysfonts",
+      "Version": "0.8.8",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "7f4dac41a3e348ae12832167e6beb875"
     },
     "systemfonts": {
       "Package": "systemfonts",

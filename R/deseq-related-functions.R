@@ -48,7 +48,7 @@ stabilize_count_data <- function(dds) {
 #' Get results from a dds object
 #'
 #' @param dds An object of class DESeqExperiment
-#' @param df A data frame with names of conditions.
+#' @param df A data frame with contrasts, one on each row. Each row contains only two columns, named c1, and c2
 #'
 #' @return Gives a data-frame for the results with those comparisons.
 #' @export
@@ -65,7 +65,7 @@ get_results_from_dds <- function(dds = dds,
     lapply(seq_len(nrow(df)), function(i) {
       get_single_result(dds = dds, comp_df = df[1, ])
     }) %>%
-      do.call("rbind", ".") -> res_df
+      do.call("rbind", .) -> res_df
   }
   res_df
 }
