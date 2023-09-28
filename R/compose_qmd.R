@@ -21,6 +21,8 @@ compose_qmd <- function(ofn = NULL, contrasts_df, thresh = 0.05, label_n = 30) {
   setup_part <- make_setup_qmd()
   qc_bit <- make_qc_bit(fn = NULL)
   analysis1 <- make_analysis()
+  overall_scope <- make_overall_scope_bit()
+
 
   # lapply(seq_len(nrow(contrasts_df)), function(i) {
   #   my_ind <- i
@@ -41,6 +43,7 @@ compose_qmd <- function(ofn = NULL, contrasts_df, thresh = 0.05, label_n = 30) {
                                                   thresh = 0.05, label_n = 30, comp_n = i)
     print(comparison_part)
   })
+  print(overall_scope)
   sink()
 
   ofn

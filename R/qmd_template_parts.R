@@ -347,3 +347,47 @@ ggplotify::as.ggplot(all_plot_{comp_n}$hm)
   }
   single_comparison_bit
 }
+
+make_overall_scope_bit <- function() {
+  overall_bit <- stringr::str_glue("
+## Over All Analysis
+
+In this analysis there were a total of `r nrow(contrasts_df)` comparisons between a total of `r nrow(meta_df)` samples.
+In this section we will visualize how the data looks as a whole considering all the gene expression, and specifically significantly differentially expressed genes.
+
+### PCA Plot
+
+PCA plot is a potent dimensionality reduction method that can show the discriminative power of the detected significantly differentially expressed genes.
+
+```{{r}}
+#| label: fig-pca
+#| fig-cap: PCA plots from the data. A) PCA plot using all the data, B) PCA plot using only significant genes, C) Variance captured by (A), and D) The amount of variation captured by each PC in (B).
+
+pca_p_l <- make_pca_plot_l(dds = dds, vs_data = vs_data, contrasts_df = contrasts_df, thresh = params$use_threshold)
+patchwork::wrap_plots(pca_p_l, nrow = 2, byrow = TRUE) +
+  patchwork::plot_layout(guides = \"collect\") +
+  patchwork::plot_annotation(tag_levels = \"A\")
+```
+PCA plot for the data in this report is given in @fig-pca.
+
+### Upset Plot
+
+Additionally when we have mutiple comparisons, real number of comparisons of interest are typically pattern that follow up/down regulation in multiple comparisons.
+Effectively the classes of genes considering all the combinations of comparisons + up/down increase exponentially.
+Usually, Venn Diagram is a way to represent this information.
+However, most Venn Diagram plotting methods cannot go past 5 sets, and even at 5 sets the figure becomes extremely busy to the point of being un-interpretable.
+To get past this problem there is new method of visualizaton called the UpSet plot.
+This is a deconstructed Venn Diagram that is much more interpretable.
+Upset plot for the data in this analysis is given in @fig_upset
+
+```{{r}}
+#| label: fig_upset
+#| fig-cap: UpSet plot with with significant genes seen across all the comparisons.
+
+upset_df <- make_upset_df(dds = dds, meta_df = meta_df,
+                          contrasts_df = contrasts_df, thresh = params$use_threshold)
+upset_plot <- make_upset_plot(uset_df)
+```
+In @fig_upset the number in the bars denotes number of genes satisfying that condition.
+                                   ")
+}
