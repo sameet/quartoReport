@@ -1,0 +1,46 @@
+---
+title: "Workflow to Create a Quarto Report"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+## Introduction
+
+Most common method for RNA-Seq analysis using DESeq2 follows a very standard protocol.
+You read in the meta-data (a sample sheet) that tells you which samples belong to which conditions.
+You read in a contrasts file that tells you which two conditions will be compared with each other to determine differential gene expression.
+And, you need a gene count matrix file which typically has genes in the rows, and samples in the columns that give an estimate of expression counts for each gene in each sample.
+
+For `DESeq2` you read in these 3 pieces of information.  You process the counts and the meta-data with the `DESeq` function and give it a design usually `~ condition` to tell DESeq2 which column is to be used as labels for differential gene expression analysis.
+
+## The problem
+
+Although, the setup is simple enough data-sets usually will have multiple conditions and multiple comparisons.
+Trying to do this manually (it is of course possible) will introduce errors of either commission or omission.
+If this can be automated it solves a lot of problems.
+Furthermore, a lot of this initial analysis is by definition exploratory.
+So you need a way to quickly change parameters and re-run the analyses as required.
+
+### The Solution
+One of the easiest ways to do this is to create a `jupyter` notebook. But that was not as approachable with `R` (now most of the pain points are gone, and it is as good with `R` as it is with `python`). `R` has a similar appraoch with a relatively new documentation system called `quarto`.  
+
+With `quartoReport` it is possible to create a `qmd` markdown file from within the package with the data being processed.  This is further customizable.  Once one file is created it can be further edited to use different input files and different settings to change the analysis as required.  Also, it is possible to parameterize `quarto` documents.  This makes it far easier to change the settings with minimal efforts and reuse the same template for many analyses.  It is also possible to extend the generated file by adding more sections and different custom code to take the analysis even further.
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(quartoReport)
+```
+
+### How To Create Quarto Document
+
+The only real requirement to generate this document is a `DESeqData` object and an associated contrasts data frame.
+It is generally a good idea to define a contrasts file. The quarto document generated depends on the contrasts file but it is not "limited" to it.  You can always add more sections to it as required.
+

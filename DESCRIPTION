@@ -30,8 +30,11 @@ Imports:
     tibble,
     kableExtra,
     stats,
-    patchwork
+    patchwork,
+    rmarkdown (>= 0.7),
+    markdown (>= 0.7)
 Suggests:
     testthat,
     slushy,
     devtools
+Config/Needs/website: rmarkdown
