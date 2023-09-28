@@ -27,7 +27,8 @@ Imports:
     magrittr,
     fs,
     rlang,
-    tibble
+    tibble,
+    kableExtra
 Suggests:
     testthat,
     slushy,

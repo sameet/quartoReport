@@ -12,8 +12,8 @@
 #' fn <- file.path("tests", "test_data", "gene_count_matrix_fixed.csv")
 #' count_mat <- read_count_mat(fn)
 #' }
-read_count_mat <- function(fn, meta_df = NULL) {
-  if(!fs::is_file(fn)) {
+read_count_mat <- function(fn = NULL, meta_df = NULL) {
+  if(is.null(fn)) {
     stop("Need count file.")
   }
 
