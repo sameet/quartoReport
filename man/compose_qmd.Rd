@@ -4,7 +4,7 @@
 \alias{compose_qmd}
 \title{Compose the Quarto markdown file.}
 \usage{
-compose_qmd(ofn = NULL)
+compose_qmd(ofn = NULL, contrasts_df, thresh = 0.05, label_n = 30)
 }
 \arguments{
 \item{ofn}{Name of the output file.  A temporary file will be generated}

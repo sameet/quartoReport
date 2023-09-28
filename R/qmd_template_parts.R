@@ -251,7 +251,7 @@ The files will be saved in output directory defined in the `params` section of t
 #' @return A bit that will display graphs for one comparison at a time.
 #' @export
 #'
-#' @example
+#' @examples
 #' \dontrun{
 #' make_single_comparison_bit(res_df)
 #' }

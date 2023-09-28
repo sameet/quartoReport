@@ -28,7 +28,9 @@ Imports:
     fs,
     rlang,
     tibble,
-    kableExtra
+    kableExtra,
+    stats,
+    patchwork
 Suggests:
     testthat,
     slushy,
