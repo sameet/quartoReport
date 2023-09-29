@@ -3,7 +3,6 @@
 #' @param title Title for the report
 #' @param author Author for the report
 #' @param email Email of the author for the report
-#' @param ... Other parameters to set the yaml header
 #'
 #' @return opening_yaml string to be used to construct the report qmd
 #' @export
@@ -15,7 +14,13 @@
 template_yaml <- function(title = "RNA-Seq Report",
                           author = "Sameet",
                           email = "sameet.mehta@yale.edu",
-                          ...) {
+                          count_fn = "gene_count_matrix.csv",
+                          meta_fn = "sample-sheet.txt",
+                          contrast_fn = "contrasts.txt",
+                          metrics = NULL,
+                          outputdir = "rnaseq_report_outputs",
+                          thresh = 0.05
+                          ) {
   opening_yaml <- stringr::str_glue("
 ---
 title: \"{title}\"
@@ -41,7 +46,7 @@ params:
   contrasts_fn: null
   metrics: null
   outputs: \"{outputdir}\"
-  use_threshold: 0.05
+  use_threshold: {thresh}
 ---
   ")
   opening_yaml
