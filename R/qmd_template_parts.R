@@ -303,7 +303,7 @@ downreg_rows <- which(use_sig_df_{comp_n}$log2FoldChange < 0)
 
 use_sig_df_{comp_n} |>
   kableExtra::kbl(booktabs = TRUE) |>
-  kableExtra::kable_stying(bootstrap_options = c(\"condensed\"),
+  kableExtra::kable_styling(bootstrap_options = c(\"condensed\"),
                            latex_options = c(\"striped\"),
                            font_size = 8
                            ) |>
@@ -388,7 +388,7 @@ Upset plot for the data in this analysis is given in @fig_upset
 
 upset_df <- make_upset_df(dds = dds, meta_df = meta_df,
                           contrasts_df = contrasts_df, thresh = params$use_threshold)
-upset_plot <- make_upset_plot(uset_df)
+upset_plot <- make_upset_plot(upset_df)
 ```
 In @fig_upset the number in the bars denotes number of genes satisfying that condition.
                                    ")

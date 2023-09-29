@@ -63,7 +63,7 @@ get_results_from_dds <- function(dds = dds,
     res_df <- get_all_results(dds)
   } else {
     lapply(seq_len(nrow(df)), function(i) {
-      get_single_result(dds = dds, comp_df = df[1, ])
+      get_single_result(dds = dds, comp_df = df[i, ])
     }) %>%
       do.call("rbind", .) -> res_df
   }
@@ -180,6 +180,6 @@ save_results <- function(res_df, op_dir, thresh = 0.05) {
       dplyr::filter(padj <= thresh) |>
       readr::write_delim(ofn_sig, delim = "\t")
   } else {
-    message("No significant gene detected for the comparison ", ofn_prefix)
+    message(paste("No significant gene detected for the comparison ", ofn_prefix))
   }
 }
