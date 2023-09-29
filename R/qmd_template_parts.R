@@ -79,6 +79,7 @@ We will import packages and functions.
 
 library(quartoReport)
 # use_thresh <- 0.05 # global threshold to use as alpha in the analysis
+if(!dir.exists(params$outputs)) dir.create(params$outputs)
 ```
 
 Please note that this package is currently under active development.
@@ -392,16 +393,16 @@ This is a deconstructed Venn Diagram that is much more interpretable.
 Upset plot for the data in this analysis is given in @fig_upset
 
 ```{{r}}
-#| label: fig_upset
+#| label: fig-upset
 #| fig-cap: UpSet plot with with significant genes seen across all the comparisons.
 
 upset_df <- make_upset_df(dds = dds, meta_df = meta_df,
                           contrasts_df = contrasts_df, thresh = params$use_threshold)
 upset_plot <- make_upset_plot(upset_df)
 ofn_upset <- file.path(params$outputs, \"upset-plot.pdf\")
-ggplot2::ggsave(filname = ofn_upset, device = \"pdf\", plot = upset_plot)
+ggplot2::ggsave(filename = ofn_upset, device = \"pdf\", plot = upset_plot)
 upset_plot
 ```
-In @fig_upset the number in the bars denotes number of genes satisfying that condition.
+In @fig-upset the number in the bars denotes number of genes satisfying that condition.
                                    ")
 }
