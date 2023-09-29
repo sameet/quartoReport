@@ -1,6 +1,6 @@
 Package: quartoReport
 Title: Generate Quarto Report for RNA-Seq Analysis
-Version: 0.0.2
+Version: 0.0.3
 Authors@R: 
     person("Sameet", "Mehta", , "sameet.mehta@yale.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3029-3217"))
