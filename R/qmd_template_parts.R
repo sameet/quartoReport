@@ -339,7 +339,7 @@ all_plot_{comp_n}$bp_s
 ```
 ```{{r}}
 #| label: fig-hm_{comp_n}
-#| fig-cap: Heatmp for all significant genes for {comparison_name}.  There are total `r nrow(sig_df)` significant genes.
+#| fig-cap: Heatmp for all significant genes for {comparison_name}.  There are total {sig_genes} significant genes.
 
 ggplotify::as.ggplot(all_plot_{comp_n}$hm)
 ```
@@ -368,7 +368,11 @@ PCA plot is a potent dimensionality reduction method that can show the discrimin
 pca_p_l <- make_pca_plot_l(dds = dds, vs_data = vs_data, contrasts_df = contrasts_df, thresh = params$use_threshold)
 patchwork::wrap_plots(pca_p_l, nrow = 2, byrow = TRUE) +
   patchwork::plot_layout(guides = \"collect\") +
-  patchwork::plot_annotation(tag_levels = \"A\")
+  patchwork::plot_annotation(tag_levels = \"A\") -> pca_plot
+
+ofn_pca <- file.path(params$outputs, \"all-pca-plot.pdf\")
+ggplot2::ggsave(filename = ofn_pca, device = \"pdf\", plot = pca_plot)
+pca_plot
 ```
 PCA plot for the data in this report is given in @fig-pca.
 
@@ -389,6 +393,9 @@ Upset plot for the data in this analysis is given in @fig_upset
 upset_df <- make_upset_df(dds = dds, meta_df = meta_df,
                           contrasts_df = contrasts_df, thresh = params$use_threshold)
 upset_plot <- make_upset_plot(upset_df)
+ofn_upset <- file.path(params$outputs, \"upset-plot.pdf\")
+ggplot2::ggsave(filname = ofn_upset, device = \"pdf\", plot = upset_plot)
+upset_plot
 ```
 In @fig_upset the number in the bars denotes number of genes satisfying that condition.
                                    ")
