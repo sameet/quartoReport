@@ -113,4 +113,5 @@ contrasts_df <- get_contrasts(fn = "path/to/contrasts/file.txt")
 meta_df <- read_meta_data("path/to/sample-sheet.txt")
 compose_qmd(ofn = "path/to/output/directory/where/the/qmd_is_saved.qmd",
             contrasts_df = contrasts_df)
+# As long as the object dds is available this compose_qmd call will work.
 ```
