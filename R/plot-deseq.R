@@ -256,16 +256,16 @@ make_upset_df <- function(dds, meta_df, contrasts_df = NULL, thresh = 0.05) {
 make_upset_plot <- function(upset_df) {
   upset_df |>
     ggplot2::ggplot(ggplot2::aes(x = comp_updown)) +
-    ggplot2::geom_bar() +
+    ggplot2::geom_bar(fill = "#5A5A5A") +
     ggplot2::geom_text(stat = "count",
                        ggplot2::aes(label = ggplot2::after_stat(count)),
-                       vjust = 1.1, color = "#F0F0F0", size = 2) +
+                       vjust = 1.1, color = "#010101", size = 3) +
     ggplot2::labs(title = "Combined Gene Visualization",
                   x = "Comparison and Up/Down Status",
                   y = "Frequency (No. of Significant Genes)") +
     ggplot2::theme_minimal() +
     my_rnaseq_theme() +
-    ggupset::scale_x_upset(order_by = "degree") +
+    ggupset::scale_x_upset(order_by = "freq") +
     ggupset::theme_combmatrix(
       combmatrix.panel.point.color.empty = "grey90",
       combmatrix.panel.striped_background.color.one = "darkgrey",
