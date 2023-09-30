@@ -1,6 +1,10 @@
 #' Compose the Quarto markdown file.
 #'
 #' @param ofn Name of the output file.  A temporary file will be generated
+#' @param contrasts_df The contrasts_df to determine number of contrasts in the data.
+#' @param thresh The threshold for calculation of default 0.05
+#' @param label_n Number of genes to label if possible default 30
+#' @param ... Other parameters to pass to opening yaml function
 #'
 #' @return ofn Path to the output file.
 #' @export
@@ -9,7 +13,7 @@
 #' \dontrun{
 #' ofn <- compose_qmd()
 #' }
-compose_qmd <- function(ofn = NULL, contrasts_df, thresh = 0.05, label_n = 30) {
+compose_qmd <- function(ofn = NULL, contrasts_df, thresh = 0.05, label_n = 30, ...) {
   # compose the complete qmd file.
   if(is.null(ofn)) {
     ofn <- tempfile(pattern = "rnaseq-report-", fileext = ".qmd")
@@ -17,7 +21,7 @@ compose_qmd <- function(ofn = NULL, contrasts_df, thresh = 0.05, label_n = 30) {
   message(paste("Using ", ofn, sep = ""))
 
   # gather all components
-  opening_yaml <- template_yaml(author = "Sameet Mehta", email = "sameet.mehta@yale.edu")
+  opening_yaml <- template_yaml(author = "Sameet Mehta", email = "sameet.mehta@yale.edu", ...)
   setup_part <- make_setup_qmd()
   qc_bit <- make_qc_bit(fn = NULL)
   analysis1 <- make_analysis()

@@ -7,7 +7,13 @@
 template_yaml(
   title = "RNA-Seq Report",
   author = "Sameet",
-  email = "sameet.mehta@yale.edu"
+  email = "sameet.mehta@yale.edu",
+  count_fn = "gene_count_matrix.csv",
+  sample_fn = "sample-sheet.txt",
+  contrast_fn = "contrasts.txt",
+  metrics = NULL,
+  outputdir = "rnaseq_report_outputs",
+  thresh = 0.05
 )
 }
 \arguments{
