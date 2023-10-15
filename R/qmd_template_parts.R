@@ -3,6 +3,12 @@
 #' @param title Title for the report
 #' @param author Author for the report
 #' @param email Email of the author for the report
+#' @param count_fn Path to the counts file
+#' @param sample_fn Path to the sample-sheet file.
+#' @param contrast_fn Path to the contrasts file.
+#' @param metric_fn Path to the metric file.  Defaul value is NULL.
+#' @param outputdir Path to the output directory where all the plots and outputs will be stored.  Will be created if it is not already present.
+#' @param thresh Adjusted p-value threshold to call significant genes.
 #'
 #' @return opening_yaml string to be used to construct the report qmd
 #' @export
@@ -17,7 +23,7 @@ template_yaml <- function(title = "RNA-Seq Report",
                           count_fn = "gene_count_matrix.csv",
                           sample_fn = "sample-sheet.txt",
                           contrast_fn = "contrasts.txt",
-                          metrics = NULL,
+                          metric_fn = NULL,
                           outputdir = "rnaseq_report_outputs",
                           thresh = 0.05
                           ) {
@@ -43,8 +49,8 @@ execute:
 params:
   counts: \"{count_fn}\"
   meta_fn: \"{sample_fn}\"
-  contrasts_fn: null
-  metrics: null
+  contrasts_fn: \"{contrasts_fn}\"
+  metrics: \"{metric_fn}\"
   outputs: \"{outputdir}\"
   use_threshold: {thresh}
 ---
@@ -255,6 +261,9 @@ The files will be saved in output directory defined in the `params` section of t
 #' Make the bits to show graphs for comparisons.
 #'
 #' @param comp_df is the single comparison in same vein as rest of the code
+#' @param thresh Adjusted p-value cutoff to call significant genes.
+#' @param label_n Number of genes to label default is 30
+#' @param comp_n
 #'
 #' @return A bit that will display graphs for one comparison at a time.
 #' @export

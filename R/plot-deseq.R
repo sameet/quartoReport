@@ -49,6 +49,9 @@ make_volcano <- function(res_df, ...) {
     dplyr::arrange(desc(abs(log2FoldChange))) |>
     dplyr::slice_head(n = use_l$label_n) -> volcano_annot_df
 
+  use_cols <- c("#2211FF", "#FF1122")
+  names(use_cols) <- c("down", "up")
+
   use_l$plot_df |>
     ggplot2::ggplot(ggplot2::aes(x = log2FoldChange,
                                  y = -10*log10(padj))) +
@@ -65,7 +68,7 @@ make_volcano <- function(res_df, ...) {
                   x = "log2(Fold Change)",
                   color = "Up/Down Expression",
                   y = "-10 x log10(padj)") +
-    ggplot2::scale_color_manual(values = c("#2211FF", "#FF1122")) -> volcano_p
+    ggplot2::scale_color_manual(values = use_cols) -> volcano_p
 
   volcano_p
 }
