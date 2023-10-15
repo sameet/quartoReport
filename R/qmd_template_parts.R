@@ -49,7 +49,7 @@ execute:
 params:
   counts: \"{count_fn}\"
   meta_fn: \"{sample_fn}\"
-  contrasts_fn: \"{contrasts_fn}\"
+  contrasts_fn: \"{contrast_fn}\"
   metrics: \"{metric_fn}\"
   outputs: \"{outputdir}\"
   use_threshold: {thresh}

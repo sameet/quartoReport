@@ -17,7 +17,7 @@
 compose_qmd <- function(ofn = NULL, contrasts_df, thresh = 0.05, label_n = 30, metric_fn = NULL, ...) {
   # compose the complete qmd file.
   if(is.null(ofn)) {
-    ofn <- tempfile(pattern = "rnaseq-report-", fileext = ".qmd")
+    ofn <- tempfile(pattern = "rnaseq-report", fileext = ".qmd")
   }
   message(paste("Using ", ofn, sep = ""))
 
