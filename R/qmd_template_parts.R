@@ -417,7 +417,8 @@ upset_df <- make_upset_df(dds = dds, meta_df = meta_df,
                           contrasts_df = contrasts_df, thresh = params$use_threshold)
 upset_plot <- make_upset_plot(upset_df)
 ofn_upset <- file.path(params$outputs, \"upset-plot.pdf\")
-ggplot2::ggsave(filename = ofn_upset, device = \"pdf\", plot = upset_plot)
+ggplot2::ggsave(filename = ofn_upset, device = \"pdf\", plot = upset_plot,
+                width = 9, height = 11, units = \"in\")
 upset_plot
 ```
 In @fig-upset the number in the bars denotes number of genes satisfying that condition.
