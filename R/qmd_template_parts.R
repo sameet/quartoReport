@@ -260,10 +260,10 @@ The files will be saved in output directory defined in the `params` section of t
 
 #' Make the bits to show graphs for comparisons.
 #'
-#' @param comp_df is the single comparison in same vein as rest of the code
+#' @param res_df Result data frame for single result.
 #' @param thresh Adjusted p-value cutoff to call significant genes.
 #' @param label_n Number of genes to label default is 30
-#' @param comp_n
+#' @param comp_n Number of comparisons to annotated.
 #'
 #' @return A bit that will display graphs for one comparison at a time.
 #' @export
