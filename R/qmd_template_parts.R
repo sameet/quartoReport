@@ -27,7 +27,12 @@ template_yaml <- function(title = "RNA-Seq Report",
                           outputdir = "rnaseq_report_outputs",
                           thresh = 0.05
                           ) {
-  if(is.null(metric_fn)) metric_fn <- "null" # only to make sure the yaml works.
+
+  if(is.null(metric_fn)) {
+    metrics_fn_part <- stringr::str_glue("metrics: null")
+  } else {
+    metrics_fn_part <- stringr::str_glue("metrics: \"{metric_fn}\"")
+  }
 
   stringr::str_glue("
 
@@ -35,7 +40,7 @@ template_yaml <- function(title = "RNA-Seq Report",
 title: \"{title}\"
 author: \"{author}\"
 email: \"{email}\"
-date: \"`r sys.Date()`\"
+date: \"`r Sys.Date()`\"
 format:
   pdf:
     coloredlinks: true
@@ -53,7 +58,7 @@ params:
   counts: \"{count_fn}\"
   meta_fn: \"{sample_fn}\"
   contrasts_fn: \"{contrast_fn}\"
-  metrics: \"{metric_fn}\"
+  {metrics_fn_part}
   outputs: \"{outputdir}\"
   use_threshold: {thresh}
 ---
