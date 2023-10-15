@@ -7,7 +7,13 @@
 make_single_comparison_bit(res_df, thresh = 0.05, label_n = 30, comp_n)
 }
 \arguments{
-\item{comp_df}{is the single comparison in same vein as rest of the code}
+\item{res_df}{Result data frame for single result.}
+
+\item{thresh}{Adjusted p-value cutoff to call significant genes.}
+
+\item{label_n}{Number of genes to label default is 30}
+
+\item{comp_n}{Number of comparisons to annotated.}
 }
 \value{
 A bit that will display graphs for one comparison at a time.

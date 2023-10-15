@@ -3,6 +3,12 @@
 #' @param title Title for the report
 #' @param author Author for the report
 #' @param email Email of the author for the report
+#' @param count_fn Path to the counts file
+#' @param sample_fn Path to the sample-sheet file.
+#' @param contrast_fn Path to the contrasts file.
+#' @param metric_fn Path to the metric file.  Defaul value is NULL.
+#' @param outputdir Path to the output directory where all the plots and outputs will be stored.  Will be created if it is not already present.
+#' @param thresh Adjusted p-value threshold to call significant genes.
 #'
 #' @return opening_yaml string to be used to construct the report qmd
 #' @export
@@ -17,11 +23,19 @@ template_yaml <- function(title = "RNA-Seq Report",
                           count_fn = "gene_count_matrix.csv",
                           sample_fn = "sample-sheet.txt",
                           contrast_fn = "contrasts.txt",
-                          metrics = NULL,
+                          metric_fn = NULL,
                           outputdir = "rnaseq_report_outputs",
                           thresh = 0.05
                           ) {
-  opening_yaml <- stringr::str_glue("
+
+  if(is.null(metric_fn)) {
+    metrics_fn_part <- stringr::str_glue("metrics: null")
+  } else {
+    metrics_fn_part <- stringr::str_glue("metrics: \"{metric_fn}\"")
+  }
+
+  stringr::str_glue("
+
 ---
 title: \"{title}\"
 author: \"{author}\"
@@ -43,13 +57,13 @@ execute:
 params:
   counts: \"{count_fn}\"
   meta_fn: \"{sample_fn}\"
-  contrasts_fn: null
-  metrics: null
+  contrasts_fn: \"{contrast_fn}\"
+  {metrics_fn_part}
   outputs: \"{outputdir}\"
   use_threshold: {thresh}
 ---
-  ")
-  opening_yaml
+
+                    ")
 }
 
 #' Make setup part of the qmd file
@@ -104,7 +118,7 @@ USE AT YOUR OWN RISK.
 #' qc_bit <- make_qc_bit()
 #' }
 make_qc_bit <- function(fn = NULL) {
-  if(is.null(fn)) {
+  if(is.null(fn) | fn == "null") {
     qc_bit <- stringr::str_glue("
 ## QC Report
 We do not have a metrics file available so we will do not have a QC section.
@@ -254,7 +268,10 @@ The files will be saved in output directory defined in the `params` section of t
 
 #' Make the bits to show graphs for comparisons.
 #'
-#' @param comp_df is the single comparison in same vein as rest of the code
+#' @param res_df Result data frame for single result.
+#' @param thresh Adjusted p-value cutoff to call significant genes.
+#' @param label_n Number of genes to label default is 30
+#' @param comp_n Number of comparisons to annotated.
 #'
 #' @return A bit that will display graphs for one comparison at a time.
 #' @export
