@@ -27,12 +27,15 @@ template_yaml <- function(title = "RNA-Seq Report",
                           outputdir = "rnaseq_report_outputs",
                           thresh = 0.05
                           ) {
-  opening_yaml <- stringr::str_glue("
+  if(is.null(metric_fn)) metric_fn <- "null" # only to make sure the yaml works.
+
+  stringr::str_glue("
+
 ---
 title: \"{title}\"
 author: \"{author}\"
 email: \"{email}\"
-date: \"`r Sys.Date()`\"
+date: \"`r sys.Date()`\"
 format:
   pdf:
     coloredlinks: true
@@ -54,8 +57,8 @@ params:
   outputs: \"{outputdir}\"
   use_threshold: {thresh}
 ---
-  ")
-  opening_yaml
+
+                    ")
 }
 
 #' Make setup part of the qmd file
@@ -110,7 +113,7 @@ USE AT YOUR OWN RISK.
 #' qc_bit <- make_qc_bit()
 #' }
 make_qc_bit <- function(fn = NULL) {
-  if(is.null(fn)) {
+  if(is.null(fn) | fn == "null") {
     qc_bit <- stringr::str_glue("
 ## QC Report
 We do not have a metrics file available so we will do not have a QC section.
