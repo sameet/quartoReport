@@ -35,7 +35,6 @@ template_yaml <- function(title = "RNA-Seq Report",
   }
 
   stringr::str_glue("
-
 ---
 title: \"{title}\"
 author: \"{author}\"
@@ -373,7 +372,52 @@ ggplotify::as.ggplot(all_plot_{comp_n}$hm)
   single_comparison_bit
 }
 
-make_overall_scope_bit <- function() {
+#' Make the bit for overall analysis
+#'
+#' @param contrasts_df Data frame of contrasts.
+#' @return str_glue object that will be printed in the report.
+#'
+#' @examples
+#' \dontrun{
+#'   scope_bit <- make_overall_scope_bit(contrasts_df)
+#' }
+make_overall_scope_bit <- function(contrasts_df) {
+  # contrasts_df <- get_contrasts(fn = contrasts_fn)
+  if(nrow(contrasts_df) == 1) {
+    upset_bit <- stringr::str_glue("
+### UpSet Plot
+
+With only a single contrast there there are only two possible conditions the genes are either upregulated, or they are downregulated.
+This information can be calculated from the results table already saved.
+                                     ")
+  } else {
+    upset_bit <- stringr::str_glue("
+### Upset Plot
+
+Additionally when we have mutiple comparisons, real number of comparisons of interest are typically pattern that follow up/down regulation in multiple comparisons.
+Effectively the classes of genes considering all the combinations of comparisons + up/down increase exponentially.
+Usually, Venn Diagram is a way to represent this information.
+However, most Venn Diagram plotting methods cannot go past 5 sets, and even at 5 sets the figure becomes extremely busy to the point of being un-interpretable.
+To get past this problem there is new method of visualizaton called the UpSet plot.
+This is a deconstructed Venn Diagram that is much more interpretable.
+Upset plot for the data in this analysis is given in @fig-upset
+
+```{{r}}
+#| label: fig-upset
+#| fig-cap: UpSet plot with with significant genes seen across all the comparisons.
+
+upset_df <- make_upset_df(dds = dds, meta_df = meta_df,
+                          contrasts_df = contrasts_df, thresh = params$use_threshold)
+upset_plot <- make_upset_plot(upset_df)
+ofn_upset <- file.path(params$outputs, \"upset-plot.pdf\")
+ggplot2::ggsave(filename = ofn_upset, device = \"pdf\", plot = upset_plot,
+                width = 9, height = 11, units = \"in\")
+upset_plot
+```
+In @fig-upset the number in the bars denotes number of genes satisfying that condition.
+
+                                   ")
+  }
   overall_bit <- stringr::str_glue("
 ## Over All Analysis
 
@@ -399,27 +443,6 @@ pca_plot
 ```
 PCA plot for the data in this report is given in @fig-pca.
 
-### Upset Plot
-
-Additionally when we have mutiple comparisons, real number of comparisons of interest are typically pattern that follow up/down regulation in multiple comparisons.
-Effectively the classes of genes considering all the combinations of comparisons + up/down increase exponentially.
-Usually, Venn Diagram is a way to represent this information.
-However, most Venn Diagram plotting methods cannot go past 5 sets, and even at 5 sets the figure becomes extremely busy to the point of being un-interpretable.
-To get past this problem there is new method of visualizaton called the UpSet plot.
-This is a deconstructed Venn Diagram that is much more interpretable.
-Upset plot for the data in this analysis is given in @fig_upset
-
-```{{r}}
-#| label: fig-upset
-#| fig-cap: UpSet plot with with significant genes seen across all the comparisons.
-
-upset_df <- make_upset_df(dds = dds, meta_df = meta_df,
-                          contrasts_df = contrasts_df, thresh = params$use_threshold)
-upset_plot <- make_upset_plot(upset_df)
-ofn_upset <- file.path(params$outputs, \"upset-plot.pdf\")
-ggplot2::ggsave(filename = ofn_upset, device = \"pdf\", plot = upset_plot)
-upset_plot
-```
-In @fig-upset the number in the bars denotes number of genes satisfying that condition.
+{upset_bit}
                                    ")
 }
