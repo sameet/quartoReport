@@ -26,7 +26,7 @@ compose_qmd <- function(ofn = NULL, contrasts_df, thresh = 0.05, label_n = 30, m
   setup_part <- make_setup_qmd()
   qc_bit <- make_qc_bit(fn = metric_fn)
   analysis1 <- make_analysis()
-  overall_scope <- make_overall_scope_bit()
+  overall_scope <- make_overall_scope_bit(contrasts_df)
 
 
   # lapply(seq_len(nrow(contrasts_df)), function(i) {
