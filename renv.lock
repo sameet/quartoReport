@@ -143,7 +143,7 @@
     },
     "GenomeInfoDb": {
       "Package": "GenomeInfoDb",
-      "Version": "1.36.3",
+      "Version": "1.36.4",
       "Source": "Bioconductor",
       "Requirements": [
         "BiocGenerics",
@@ -157,7 +157,7 @@
         "stats4",
         "utils"
       ],
-      "Hash": "7e59ef611ff4e9014ed59d3998aa34e4"
+      "Hash": "1c6756527d78e8135d34662d2e1d54ec"
     },
     "GenomeInfoDbData": {
       "Package": "GenomeInfoDbData",
@@ -170,7 +170,7 @@
     },
     "GenomicRanges": {
       "Package": "GenomicRanges",
-      "Version": "1.52.0",
+      "Version": "1.52.1",
       "Source": "Bioconductor",
       "Requirements": [
         "BiocGenerics",
@@ -184,7 +184,7 @@
         "stats4",
         "utils"
       ],
-      "Hash": "dc2970e434666341650a7983435597bf"
+      "Hash": "c9471497a07953ded9b8889879c079e9"
     },
     "IRanges": {
       "Package": "IRanges",

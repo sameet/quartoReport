@@ -41,6 +41,8 @@ author: \"{author}\"
 email: \"{email}\"
 date: \"`r Sys.Date()`\"
 format:
+  typst:
+    keep-typ: true
   pdf:
     coloredlinks: true
   html:
@@ -90,6 +92,7 @@ We will import packages and functions.
 # library(remotes)
 # remotes::install_github(\"sameet/quartoReport\")
 
+suppressPackageStartupMessages(library(dplyr)) # to make sure %>% is always found.
 library(quartoReport)
 # use_thresh <- 0.05 # global threshold to use as alpha in the analysis
 if(!dir.exists(params$outputs)) dir.create(params$outputs)
