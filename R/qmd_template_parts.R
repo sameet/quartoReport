@@ -29,9 +29,9 @@ template_yaml <- function(title = "RNA-Seq Report",
                           ) {
 
   if(is.null(metric_fn)) {
-    metrics_fn_part <- stringr::str_glue("metrics: null")
+    metrics_fn_part <- stringr::str_glue("null")
   } else {
-    metrics_fn_part <- stringr::str_glue("metrics: \"{metric_fn}\"")
+    metrics_fn_part <- stringr::str_glue("\"{metric_fn}\"")
   }
 
   stringr::str_glue("
@@ -59,7 +59,7 @@ params:
   counts: \"{count_fn}\"
   meta_fn: \"{sample_fn}\"
   contrasts_fn: \"{contrast_fn}\"
-  {metrics_fn_part}
+  metrics: {metrics_fn_part}
   outputs: \"{outputdir}\"
   use_threshold: {thresh}
 ---
