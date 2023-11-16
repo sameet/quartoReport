@@ -120,7 +120,7 @@ USE AT YOUR OWN RISK.
 #' qc_bit <- make_qc_bit()
 #' }
 make_qc_bit <- function(fn = NULL) {
-  if(is.null(fn) | fn == "null") {
+  if(is.null(fn)) {
     qc_bit <- stringr::str_glue("
 ## QC Report
 We do not have a metrics file available so we will do not have a QC section.
@@ -322,6 +322,8 @@ res_df_{comp_n} |>
   dplyr::slice_max(order_by = abs(log2FoldChange), n = {label_n}) |>
   dplyr::arrange(desc(log2FoldChange)) |>
   dplyr::select(gene_id, log2FoldChange, padj) -> use_sig_df_{comp_n}
+
+save_results(res_df_{comp_n}, op_dir = params$outputs, thresh = params$use_threshold)
 
 upreg_rows <- which(use_sig_df_{comp_n}$log2FoldChange > 0)
 downreg_rows <- which(use_sig_df_{comp_n}$log2FoldChange < 0)
